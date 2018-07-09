@@ -14,7 +14,8 @@ exports.getGameData = async () => {
 	result.cureFee = gameData._cureFee;
 	result.killTime = gameData._killTime;
 	result.cooldown = gameData._cooldown;
-	result.totalPlayers = await gamePersistence.getPlayerCount();
+	result.numberOfPlayerAddresses = await ethContract.getPlayerCount();
+	result.totalPlayersInDB = await gamePersistence.getPlayerCount();
 	result.totalPrizePool = await ethContract.getPrizePool();
 
 	return result;
