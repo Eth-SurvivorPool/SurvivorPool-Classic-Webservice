@@ -605,7 +605,7 @@ exports.getWeb3 = (provider) => {
 
 exports.getContract = async (web3) => {
 	if (exports.contractABI == null) {
-		var result = await loadAbi('/Users/212391398/source/sandbox/eth72/build/contracts/Survive.json');
+		var result = await loadAbi('abi/survive.json');
 		exports.contractABI = result.abi;
 	}
 	return new web3.eth.Contract(contractABI, contractAddress);
