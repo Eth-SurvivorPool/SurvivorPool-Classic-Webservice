@@ -32,17 +32,17 @@ exports.infectRandomPlayer = async () => {
 	}
 };
 
-var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
-
-	var gameData = await exports.getGameData(false);
-
-	console.log("Settling Game");
-	console.log(gameData);
-
-	var result = await ethContract.settleGame();
-	console.log(result);
-});
-
-var infectJob = scheduler.scheduleJob('00 * * * *', async () => {
-	exports.infectRandomPlayer();
-});
+// var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
+//
+// 	var gameData = await exports.getGameData(false);
+//
+// 	console.log("Settling Game");
+// 	console.log(gameData);
+//
+// 	var result = await ethContract.settleGame();
+// 	console.log(result);
+// });
+//
+// var infectJob = scheduler.scheduleJob('00 * * * *', async () => {
+// 	exports.infectRandomPlayer();
+// });
