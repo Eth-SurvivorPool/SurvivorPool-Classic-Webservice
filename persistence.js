@@ -6,6 +6,8 @@ const pool = new Pool({
 	ssl: false
 });
 
+console.log("Database url: " + process.env.DATABASE_URL);
+
 exports.query = async (query) =>
 {
 	const client = await pool.connect();
