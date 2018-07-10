@@ -8,7 +8,7 @@
 exports.owner = process.env.SURVIVOR_OWNER_ACCOUNT || '0x0092c05d70b07A3d110255890Bdb52AE3B7104A1';
 exports.contractAddress = process.env.SURVIVOR_CONTRACT_ADDRESS ||  '0xEf5a1D25FB91a0490a5740de35b71e90fbB52822';
 
-exports.web3Provider_ws = process.env.WEB3_PROVIDER_WS ||  'wss://ropsten.infura.io/_ws';
+exports.web3Provider_ws = process.env.WEB3_PROVIDER_WS ||  'wss://ropsten.infura.io/ws';
 exports.web3Provider_http = process.env.WEB3_PROVIDER_HTTP ||  'https://ropsten.infura.io/JCs6qYLCphYtcJVWWUpR';
 
 console.log(exports);
