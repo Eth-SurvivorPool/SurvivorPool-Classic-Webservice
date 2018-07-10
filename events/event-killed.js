@@ -1,6 +1,6 @@
-let util = require('./survive-util');
-let gamePersistence = require('./game-persistence');
-let environment = require('./environment');
+let util = require('../blockchain/survive-util');
+let gamePersistence = require('../game/game-persistence');
+let environment = require('../environment');
 
 var init = async () => {
 	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));

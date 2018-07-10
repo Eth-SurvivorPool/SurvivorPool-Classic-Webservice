@@ -1,5 +1,5 @@
 let Web3 = require('web3');
-let environment = require('./environment');
+let environment = require('../environment');
 
 let contractABI = [
 	{

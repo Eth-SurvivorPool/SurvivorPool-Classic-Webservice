@@ -1,14 +1,14 @@
 let util = require('./survive-util');
-let gamePersistence = require('./game-persistence');
-let environment = require('./environment');
-let joinedEvent = require('./event-joined');
-let infectedEvent = require('./event-infected');
-let curedEvent = require('./event-cured');
-let killedEvent = require('./event-killed');
-let attemptInfectedEvent = require('./event-attempt-infected');
-let playerBalanceUpdated = require('./event-balance-updated');
-let prizeEventAwarded = require('./event-prize-awarded');
-let gameResetEvent = require('./event-game-reset');
+let gamePersistence = require('../game/game-persistence');
+let environment = require('../environment');
+let joinedEvent = require('../events/event-joined');
+let infectedEvent = require('../events/event-infected');
+let curedEvent = require('../events/event-cured');
+let killedEvent = require('../events/event-killed');
+let attemptInfectedEvent = require('../events/event-attempt-infected');
+let playerBalanceUpdated = require('../events/event-balance-updated');
+let prizeEventAwarded = require('../events/event-prize-awarded');
+let gameResetEvent = require('../events/event-game-reset');
 
 
 let init = async() => {

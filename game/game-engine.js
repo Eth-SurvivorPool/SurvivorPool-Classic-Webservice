@@ -1,7 +1,7 @@
 
 let scheduler = require("node-schedule");
-let ethContract = require("./contract-interface");
-let surviveEvents = require("./survive-events");
+let ethContract = require("../blockchain/contract-interface");
+let surviveEvents = require("../blockchain/survive-events");
 let gamePersistence = require("./game-persistence");
 
 

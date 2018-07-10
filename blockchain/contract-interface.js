@@ -1,5 +1,5 @@
 let util = require('./survive-util');
-let environment = require('./environment');
+let environment = require('../environment');
 
 let ownerAccount = environment.owner;
 

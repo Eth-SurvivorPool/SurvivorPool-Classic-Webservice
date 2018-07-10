@@ -1,4 +1,4 @@
-let persistence = require('./persistence');
+let persistence = require('../util/persistence');
 
 let selectPlayerQuery = () => {
 	return "SELECT * FROM survive.players WHERE address=$1";
