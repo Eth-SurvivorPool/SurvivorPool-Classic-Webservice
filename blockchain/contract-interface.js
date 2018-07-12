@@ -2,6 +2,7 @@ let util = require('./survive-util');
 let environment = require('../environment');
 
 let ownerAccount = environment.owner;
+let ownerKey = environment.privateKey;
 
 let callContractMethod = async (f, account) => {
 	var result = null;
@@ -24,7 +25,6 @@ let sendContractMethod = async (f, account, gas) => {
 	}
 	return result;
 };
-
 
 let init = async () => {
 	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_http));
@@ -61,11 +61,11 @@ let init = async () => {
 	};
 
 	//Send Methods
-	exports.settleGame = async (forceKill) => {
+	exports.settleGame = async (forceKill, reset) => {
 		let gas = await surviveContract.methods.settleGame(forceKill).estimateGas({from: ownerAccount});
 		console.log("gas required: " + gas);
 
-		var result = await sendContractMethod(surviveContract.methods.settleGame(forceKill), ownerAccount, gas);
+		var result = await sendContractMethod(surviveContract.methods.settleGame(forceKill, reset), ownerAccount, gas);
 		return result;
 	};
 

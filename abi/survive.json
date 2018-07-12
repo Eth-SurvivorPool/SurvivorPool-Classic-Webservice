@@ -62,7 +62,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "isPaused",
+    "name": "getPauseState",
     "outputs": [
       {
         "name": "_paused",
@@ -297,6 +297,33 @@
     "inputs": [
       {
         "indexed": false,
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "total",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "added",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "add",
+        "type": "bool"
+      }
+    ],
+    "name": "roundBalanceEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "name": "payer",
         "type": "address"
       },
@@ -402,6 +429,10 @@
       {
         "name": "_forceKillInfectedPlayers",
         "type": "bool"
+      },
+      {
+        "name": "_reset",
+        "type": "bool"
       }
     ],
     "name": "settleGame",
@@ -423,6 +454,53 @@
       {
         "name": "_reset",
         "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_entryFee",
+        "type": "uint256"
+      },
+      {
+        "name": "_cureFee",
+        "type": "uint256"
+      },
+      {
+        "name": "_killTime",
+        "type": "uint256"
+      },
+      {
+        "name": "_cooldown",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateGameRules",
+    "outputs": [
+      {
+        "name": "_retEntryFee",
+        "type": "uint256"
+      },
+      {
+        "name": "_retCureFee",
+        "type": "uint256"
+      },
+      {
+        "name": "_retRoundBalance",
+        "type": "uint256"
+      },
+      {
+        "name": "_retKillTime",
+        "type": "uint256"
+      },
+      {
+        "name": "_retCooldown",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -483,6 +561,10 @@
       },
       {
         "name": "_cureFee",
+        "type": "uint256"
+      },
+      {
+        "name": "_roundBalance",
         "type": "uint256"
       },
       {

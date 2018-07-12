@@ -34,20 +34,4 @@ let init = async() => {
 
 var i = init().then((resolve, reject) => {
 	console.log("All-Events registered");
-})
-
-//
-// let surviveContract = util.getContract(util.getWeb3("ws://127.0.0.1:8545"));
-// // event playerBalanceUpdatedEvent(address owner, uint balance);
-
-// // event gameSettledEvent(uint winners, uint prize, uint contractBalance);
-// // event gameResetEvent(uint timestamp);
-//
-// // surviveContract.getPastEvents('playerInfectedEvent', {
-// // 	fromBlock: 0,
-// // 	toBlock: 75
-// // }, (error, events) => { console.log(events); })
-// // 	.then(function(events){
-// // 		console.log(events) // same results as the optional callback above
-// // 	});
-
+});

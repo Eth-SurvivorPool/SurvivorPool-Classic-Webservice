@@ -65,7 +65,7 @@ let contractABI = [
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "isPaused",
+		"name": "getPauseState",
 		"outputs": [
 			{
 				"name": "_paused",
@@ -300,6 +300,33 @@ let contractABI = [
 		"inputs": [
 			{
 				"indexed": false,
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "total",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "added",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "add",
+				"type": "bool"
+			}
+		],
+		"name": "roundBalanceEvent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
 				"name": "payer",
 				"type": "address"
 			},
@@ -384,25 +411,6 @@ let contractABI = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_forceKillInfectedPlayers",
-				"type": "bool"
-			}
-		],
-		"name": "settleGame",
-		"outputs": [
-			{
-				"name": "_prize",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
 				"name": "_ownerAddress",
 				"type": "address"
 			}
@@ -420,12 +428,82 @@ let contractABI = [
 	},
 	{
 		"constant": false,
+		"inputs": [
+			{
+				"name": "_forceKillInfectedPlayers",
+				"type": "bool"
+			},
+			{
+				"name": "_reset",
+				"type": "bool"
+			}
+		],
+		"name": "settleGame",
+		"outputs": [
+			{
+				"name": "_prize",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
 		"inputs": [],
 		"name": "resetGame",
 		"outputs": [
 			{
 				"name": "_reset",
 				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_entryFee",
+				"type": "uint256"
+			},
+			{
+				"name": "_cureFee",
+				"type": "uint256"
+			},
+			{
+				"name": "_killTime",
+				"type": "uint256"
+			},
+			{
+				"name": "_cooldown",
+				"type": "uint256"
+			}
+		],
+		"name": "updateGameRules",
+		"outputs": [
+			{
+				"name": "_retEntryFee",
+				"type": "uint256"
+			},
+			{
+				"name": "_retCureFee",
+				"type": "uint256"
+			},
+			{
+				"name": "_retRoundBalance",
+				"type": "uint256"
+			},
+			{
+				"name": "_retKillTime",
+				"type": "uint256"
+			},
+			{
+				"name": "_retCooldown",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -486,6 +564,10 @@ let contractABI = [
 			},
 			{
 				"name": "_cureFee",
+				"type": "uint256"
+			},
+			{
+				"name": "_roundBalance",
 				"type": "uint256"
 			},
 			{
@@ -558,25 +640,46 @@ let contractABI = [
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_ownerAddress",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getPlayerByIndex",
+		"outputs": [
+			{
+				"name": "_owner",
 				"type": "address"
 			},
 			{
-				"name": "amount",
+				"name": "_isAlive",
+				"type": "bool"
+			},
+			{
+				"name": "_isInfected",
+				"type": "bool"
+			},
+			{
+				"name": "_infectedTime",
 				"type": "uint256"
 			},
 			{
-				"name": "add",
+				"name": "_immuneTime",
+				"type": "uint256"
+			},
+			{
+				"name": "_balance",
+				"type": "uint256"
+			},
+			{
+				"name": "_initialized",
 				"type": "bool"
 			}
 		],
-		"name": "_updateBalance",
-		"outputs": [],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	}
 ]
@@ -586,8 +689,7 @@ let contractAddress = environment.contractAddress;
 let fs = require('fs');
 
 let loadAbi = async (filename) => {
-	return new Promise(function(resolve, reject)
-	{
+	return new Promise(function(resolve, reject) {
 		fs.readFile( filename, (err, result) => {
 			if (!err) {
 				resolve(JSON.parse(result.toString()));
@@ -623,5 +725,5 @@ exports.callContractMethod = async (f, account) => {
 };
 
 exports.toEther = (gwei) => {
-   return	Web3.utils.fromWei(gwei, "ether")
+   return Web3.utils.fromWei(gwei, "ether")
 };

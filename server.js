@@ -65,7 +65,7 @@ app.get('/infect', async (req, res) => {
 });
 
 app.get('/settle', async (req, res) => {
-	var result = await ethContract.settleGame(true);
+	var result = await ethContract.settleGame(true, true);
 	return res.json(result);
 });
 
