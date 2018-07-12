@@ -9,7 +9,7 @@ exports.privateKey = process.env.SURVIVOR_OWNER_KEY;
 
 exports.contractAddress = process.env.SURVIVOR_CONTRACT_ADDRESS ||  '0x66341292964da8AEaf3C1F8cb71eeBa2CBb92970';
 
-exports.web3Provider_ws = process.env.WEB3_PROVIDER_WS ||  'wss://ropsten.infura.io/ws';
+exports.web3Provider_ws = process.env.WEB3_PROVIDER_WS ||  'wss://ropsten.infura.io/_ws';
 exports.web3Provider_http = process.env.WEB3_PROVIDER_HTTP ||  'https://ropsten.infura.io/JCs6qYLCphYtcJVWWUpR';
 
 console.log(exports);
