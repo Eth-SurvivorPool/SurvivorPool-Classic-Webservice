@@ -23,14 +23,20 @@ exports.getGameData = async () => {
 };
 
 exports.infectRandomPlayer = async () => {
+
+	var now = new Date();
+
+	console.log("Infecting players @ " + now );
+
 	var count = await gamePersistence.getPlayerCount();
 	var randomCount = Math.min(count / 10, 1);
 	var result = await gamePersistence.getRandomPlayers(randomCount);
 
 	for (var i=0; i<result.length; i++)
 	{
-		var r = await ethContract.infect(result[i]);
-		console.log(r);
+		console.log("Infecting player: " + result[i] );
+		// var r = await ethContract.infect(result[i]);
+		// console.log(r);
 	}
 };
 
@@ -38,14 +44,15 @@ var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
 
 	var gameData = await exports.getGameData(false);
 
-	console.log("Settling Game");
+	var now = new Date();
+	console.log("Settling Game @ " + now );
 	console.log(gameData);
 
-	var result = await ethContract.settleGame();
-	console.log(result);
+	// var result = await ethContract.settleGame();
+	// console.log(result);
 });
 
 
-// var infectJob = scheduler.scheduleJob('00 * * * *', async () => {
-// 	exports.infectRandomPlayer();
-// });
+var infectJob = scheduler.scheduleJob('* 0 */2 * * *', async () => {
+	exports.infectRandomPlayer();
+});
