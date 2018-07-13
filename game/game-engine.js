@@ -35,8 +35,8 @@ exports.infectRandomPlayer = async () => {
 	for (var i=0; i<result.length; i++)
 	{
 		console.log("Infecting player: " + result[i] );
-		// var r = await ethContract.infect(result[i]);
-		// console.log(r);
+		var r = await ethContract.infect(result[i]);
+		console.log(r);
 	}
 };
 
@@ -48,8 +48,8 @@ var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
 	console.log("Settling Game @ " + now );
 	console.log(gameData);
 
-	// var result = await ethContract.settleGame();
-	// console.log(result);
+	var result = await ethContract.settleGame(true, true);
+	console.log(result);
 });
 
 

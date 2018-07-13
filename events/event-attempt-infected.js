@@ -8,6 +8,14 @@ var init = async () => {
 	surviveContract.events.playerAttemptInfectEvent({
 		fromBlock: 0
 	}, async (error, event) => {
+		if (!error)
+		{
+			console.log(event);
+		}
+		else
+		{
+			console.error(error);
+		}
 		// console.log(event);
 	}).on('data', (event) => {
 		// console.log(event); // same results as the optional callback above

@@ -8,7 +8,13 @@ var init = async () => {
 	surviveContract.events.playerAwardedEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
-		console.log("Player " + event.returnValues.owner + " awarded: " + event.returnValues.prize);
+		if (!error) {
+			console.log("Player " + event.returnValues.owner + " awarded: " + event.returnValues.prize);
+		}
+		else
+		{
+			console.error(error);
+		}
 	}).on ('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {

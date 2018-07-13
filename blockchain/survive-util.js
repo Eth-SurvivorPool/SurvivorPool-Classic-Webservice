@@ -702,7 +702,8 @@ let loadAbi = async (filename) => {
 };
 
 exports.getWeb3 = (provider) => {
-	return new Web3(Web3.givenProvider || provider);
+	var w3 = new Web3(Web3.givenProvider || provider);
+	return w3;
 };
 
 exports.getContract = async (web3) => {

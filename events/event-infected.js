@@ -9,13 +9,19 @@ var init = async () => {
 	surviveContract.events.playerInfectedEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
-		let player = {
-			address: event.returnValues.owner,
-			status: 2,
-			statusTime:  event.returnValues.infectedTime
-		};
-		var result = await gamePersistence.updatePlayerStatus(player);
-		console.log("Player " + player.address + " infected at: " + player.statusTime);
+		if (!error) {
+			let player = {
+				address: event.returnValues.owner,
+				status: 2,
+				statusTime: event.returnValues.infectedTime
+			};
+			var result = await gamePersistence.updatePlayerStatus(player);
+			console.log("Player " + player.address + " infected at: " + player.statusTime);
+		}
+		else
+		{
+			console.error(error);
+		}
 	}).on ('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {

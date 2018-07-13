@@ -10,7 +10,13 @@ var init = async () => {
 	surviveContract.events.gameSettledEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
-		console.log("Game settled: " + event.returnValues);
+		if (!error) {
+			console.log("Game settled: " + event.returnValues);
+		}
+		else
+		{
+			console.error(error);
+		}
 	}).on ('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {

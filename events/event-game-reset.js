@@ -10,24 +10,26 @@ var init = async () => {
 	surviveContract.events.gameResetEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
-
-		var count = 0;
-		var players = await gamePersistence.getPlayers(null);
-		for (var i=0; i<players.length; i++)
-		{
-			var playerInfo = await ethContract.getPlayer({"address": players[i].address});
-			if (playerInfo._isAlive)
-			{
-				let player = {
-					address: playerInfo._owner,
-					status: 1,
-					statusTime:  (new Date()).getTime()
-				};
-				var result = await gamePersistence.updatePlayerStatus(player);
-				count++;
+		if (!error) {
+			var count = 0;
+			var players = await gamePersistence.getPlayers(null);
+			for (var i = 0; i < players.length; i++) {
+				var playerInfo = await ethContract.getPlayer({"address": players[i].address});
+				if (playerInfo._isAlive) {
+					let player = {
+						address: playerInfo._owner,
+						status: 1,
+						statusTime: (new Date()).getTime()
+					};
+					var result = await gamePersistence.updatePlayerStatus(player);
+					count++;
+				}
 			}
+			console.log("Game event received, players reset: " + count);
 		}
-		console.log("Game event received, players reset: " + count);
+		else {
+			console.error(error);
+		}
 	}).on ('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {

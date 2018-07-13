@@ -9,12 +9,18 @@ var init = async () => {
 	surviveContract.events.playerBalanceUpdatedEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
-		let player = {
-			address: event.returnValues.owner,
-			balance: util.toEther(event.returnValues.balance)
-		};
-		var result = await gamePersistence.updatePlayerBalance(player);
-		console.log("Player " + player.address + " balanced updated: " + player.balance);
+		if (!error) {
+			let player = {
+				address: event.returnValues.owner,
+				balance: util.toEther(event.returnValues.balance)
+			};
+			var result = await gamePersistence.updatePlayerBalance(player);
+			console.log("Player " + player.address + " balanced updated: " + player.balance);
+		}
+		else
+		{
+			console.error(error);
+		}
 	}).on ('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {
