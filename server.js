@@ -59,30 +59,6 @@ app.get('/game', async (req, res) => {
     return res.json(result);
 });
 
-app.get('/infect', async (req, res) => {
-	var result = await gameEngine.infectRandomPlayer();
-	return res.json(result);
-});
-
-app.get('/settle', async (req, res) => {
-	var result = await ethContract.settleGame(true, true);
-	return res.json(result);
-});
-
-app.get('/reset', async (req, res) => {
-	var result = await ethContract.resetGame();
-	return res.json(result);
-});
-
-app.get('/kill/:address', async (req, res) => {
-	var playerInfo = {
-		address: req.params.address
-	};
-
-	var result = await ethContract.kill(playerInfo);
-	return res.json(result);
-});
-
 app.get('/clock', (req, res) => {
   var date = new Date();
   res.json({"timestamp": date.getTime() })
