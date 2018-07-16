@@ -9,4 +9,6 @@ exports.contractAddress = process.env.SURVIVOR_CONTRACT_ADDRESS ||  '0x663412929
 exports.web3Provider_ws = process.env.WEB3_PROVIDER_WS ||  'wss://ropsten.infura.io/ws';
 exports.web3Provider_http = process.env.WEB3_PROVIDER_HTTP ||  'https://ropsten.infura.io/JCs6qYLCphYtcJVWWUpR';
 
+exports.gasMultiplier =  process.env.GAS_MULTIPLIER || 2;
+
 console.log(exports);

@@ -4,6 +4,7 @@ let environment = require('../environment');
 
 let ownerAccount = environment.owner;
 let ownerKey = environment.privateKey;
+let gasMultiplier = environment.gasMultiplier;
 
 let web3 = util.getWeb3(environment.web3Provider_http);
 var surviveContract = null;
@@ -38,6 +39,7 @@ let sendTransaction = async (f, account, key, gas) => {
 	console.log(nonce);
 
 	let gasPrice = await web3.eth.getGasPrice();
+	gas = gas * gasMultiplier; //doubling gas for now
 
 	console.log(gasPrice);
 
