@@ -9,6 +9,12 @@ var init = async () => {
 		fromBlock: 0
 	}, async (error, event) =>  {
 		if (!error) {
+			var player = {
+				address: event.returnValues.owner,
+				prize: event.returnValues.prize,
+				winTime: new Date().getTime()
+			};
+			var result = await gamePersistence.insertWinner(player);
 			console.log("Player " + event.returnValues.owner + " awarded: " + event.returnValues.prize);
 		}
 		else

@@ -16,6 +16,11 @@ let insertPlayerQuery = () => {
 	return "INSERT INTO survive.players(address, join_timestamp, block_idx, balance, block_hash) VALUES ($1,to_timestamp($2),$3,$4,$5)";
 };
 
+let insertWinnerQuery = () => {
+	return "INSERT INTO survive.players(address, prize, join_timestamp) VALUES ($1, $2, to_timestamp($3))";
+};
+
+
 let selectRandomPlayers = (count) => {
 	return "SELECT * FROM survive.players WHERE status = 1 ORDER BY random() LIMIT " + count;
 };
@@ -39,6 +44,19 @@ exports.upsertPlayer = async (player) => {
 		if (result.rows.length <= 0) {
 			result = await persistence.query(insertPlayerQuery(),[player.address.toString(), player.joinTime, player.blockIdx, player.balance, player.blockHash.toString()]);
 		}
+		return result;
+	}
+	catch(ex)
+	{
+		console.error(ex);
+	}
+
+	return null;
+};
+
+exports.insertWinner = async (player) => {
+	try {
+		result = await persistence.query(insertWinnerQuery(),[player.address.toString(), player.prize, player.winTime]);
 		return result;
 	}
 	catch(ex)
