@@ -12,7 +12,7 @@ var init = async () => {
 		if (!error) {
 			let player = {
 				address: event.returnValues.owner,
-				status: 2,
+				status: 1,
 				statusTime: event.returnValues.cureTime
 			};
 			if (event.returnValues.cured) {
