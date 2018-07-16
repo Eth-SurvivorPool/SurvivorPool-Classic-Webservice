@@ -21,7 +21,7 @@ let insertWinnerQuery = () => {
 };
 
 let selectRecentWinners = () => {
-	return "SELECT * FROM survive.winners WHERE win_timestamp > now() - integer '1'"
+	return "SELECT * FROM survive.winners"
 };
 
 let selectRandomPlayers = (count) => {
