@@ -29,6 +29,11 @@ app.get('/players', async (req, res) => {
     return res.json(result);
 });
 
+app.get('/winners', async (req, res) => {
+	var result = await gamePersistence.getRecentWinners();
+	return res.json(result);
+});
+
 app.get('/players/:address', async (req, res) => {
 	var playerInfo = {
 	    address: req.params.address

@@ -20,6 +20,9 @@ let insertWinnerQuery = () => {
 	return "INSERT INTO survive.players(address, prize, join_timestamp) VALUES ($1, $2, to_timestamp($3))";
 };
 
+let selectRecentWinners = () => {
+	return "SELECT * FROM survive.winners WHERE win_timestamp > now() - integer '1'"
+};
 
 let selectRandomPlayers = (count) => {
 	return "SELECT * FROM survive.players WHERE status = 1 ORDER BY random() LIMIT " + count;
@@ -84,6 +87,18 @@ exports.getPlayers = async (address) => {
 	}
 
 	return null;
+};
+
+exports.getRecentWinners  = async() => {
+	try {
+		let result = await persistence.query(selectRecentWinners());
+		return result.rows;
+	}
+	catch(ex)
+	{
+		console.error(ex);
+	}
+	return null
 };
 
 exports.getPlayerCount = async () => {
