@@ -16,6 +16,10 @@ let insertPlayerQuery = () => {
 	return "INSERT INTO survive.players(address, join_timestamp, block_idx, balance, block_hash) VALUES ($1,to_timestamp($2),$3,$4,$5)";
 };
 
+let updatePlayerQuery = () => {
+	return "UPDATE survive.players SET balance=$2 WHERE address = $1";
+};
+
 let insertWinnerQuery = () => {
 	return "INSERT INTO survive.players(address, prize, join_timestamp) VALUES ($1, $2, to_timestamp($3))";
 };
@@ -40,12 +44,32 @@ let updatePlayerBalance = () => {
 	return "UPDATE survive.players SET balance = $2 WHERE address = $1";
 };
 
+exports.insertPlayer = async (player) => {
+	try {
+		let result = await persistence.query(selectPlayerQuery(),[player.address.toString()]);
+
+		if (result.rows.length <= 0) {
+			result = await persistence.query(insertPlayerQuery(),[player.address.toString(), player.joinTime, player.blockIdx, player.balance, player.blockHash.toString()]);
+		}
+		return result;
+	}
+	catch(ex)
+	{
+		console.error(ex);
+	}
+
+	return null;
+};
+
 exports.upsertPlayer = async (player) => {
 	try {
 		let result = await persistence.query(selectPlayerQuery(),[player.address.toString()]);
 
 		if (result.rows.length <= 0) {
 			result = await persistence.query(insertPlayerQuery(),[player.address.toString(), player.joinTime, player.blockIdx, player.balance, player.blockHash.toString()]);
+		}
+		else {
+			result = await persistence.query(updatePlayerQuery(),[player.address.toString(), player.balance]);
 		}
 		return result;
 	}

@@ -77,6 +77,11 @@ let init = async () => {
 		return result;
 	};
 
+	exports.getPlayerByIdx = async (idx) => {
+		var result = await callContractMethod(surviveContract.methods.getPlayerByIndex(idx), ownerAccount);
+		return result;
+	};
+
 	exports.getPlayerCount = async () => {
 		var result = await callContractMethod(surviveContract.methods.getPlayerCount(), ownerAccount);
 		return result;

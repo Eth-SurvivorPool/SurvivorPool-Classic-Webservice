@@ -1,8 +1,8 @@
-
 let scheduler = require("node-schedule");
 let ethContract = require("../blockchain/contract-interface");
 let surviveEvents = require("../blockchain/survive-events");
 let gamePersistence = require("./game-persistence");
+let util = require("../blockchain/survive-util");
 
 
 exports.getGameData = async () => {
@@ -23,7 +23,6 @@ exports.getGameData = async () => {
 };
 
 exports.infectRandomPlayer = async () => {
-
 	var now = new Date();
 
 	console.log("Infecting players @ " + now );
@@ -55,4 +54,26 @@ var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
 var infectJob = scheduler.scheduleJob('15 * * * *', async () => {
 	exports.infectRandomPlayer();
 });
+
+exports.reconcilePlayers = async () => {
+	var playerCount = await ethContract.getPlayerCount();
+
+	for (var i=0; i<playerCount; i++)
+	{
+		var r = await ethContract.getPlayerByIdx(i);
+		let result = await gamePersistence.upsertPlayer(
+			{address: r._owner,
+			joinTime: new Date().getTime(),
+			blockIdx: 0,
+			balance: util.toEther(r._balance),
+			blockHash: "0x0"}
+		);
+	}
+};
+
+var reconcilePlayersJob = scheduler.scheduleJob('*/15 * * * *', async () => {
+	exports.reconcilePlayers();
+});
+
+
 

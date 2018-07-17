@@ -17,7 +17,7 @@ var init = async () => {
 				balance: util.toEther(event.returnValues.balance),
 				blockHash: event.blockHash
 			};
-			var result = await gamePersistence.upsertPlayer(player);
+			var result = await gamePersistence.insertPlayer(player);
 			console.log("Player " + player.address + " joined" + " at block " + player.blockIdx);
 		}
 		else
