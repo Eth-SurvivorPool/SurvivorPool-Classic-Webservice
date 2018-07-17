@@ -32,37 +32,40 @@ let sendContractMethod = async (f, account, gas) => {
 };
 
 let sendTransaction = async (f, account, key, gas) => {
-	let privateKey = new Buffer(key, 'hex');
 
-	let nonce = await web3.eth.getTransactionCount(account);
+	try {
+		let privateKey = new Buffer(key, 'hex');
 
-	console.log(nonce);
+		var nonce = await web3.eth.getTransactionCount(account);
+		nonce = nonce;
+		let gasPrice = await web3.eth.getGasPrice();
+		gas = gas * gasMultiplier; //doubling gas for now
 
-	let gasPrice = await web3.eth.getGasPrice();
-	gas = gas * gasMultiplier; //doubling gas for now
+		var txData = f.encodeABI();
 
-	console.log(gasPrice);
+		var rawTx = {
+			nonce: '0x' + nonce.toString(16),
+			gasPrice: '0x' + gasPrice.toString(16),
+			gasLimit: '0x' + gas.toString(16),
+			to: surviveContract.options.address,
+			value: '0x0',
+			data: txData
+		};
 
-	var txData = f.encodeABI();
+		console.log(rawTx);
 
-	var rawTx = {
-		nonce: '0x' + nonce.toString(16),
-		gasPrice: '0x' + gasPrice.toString(16),
-		gasLimit: '0x' + gas.toString(16),
-		to: surviveContract.options.address,
-		value: '0x0',
-		data: txData
-	};
+		var tx = new EthTx(rawTx);
+		tx.sign(privateKey);
 
-	console.log(rawTx);
+		var serializedTx = tx.serialize();
 
-	var tx = new EthTx(rawTx);
-	tx.sign(privateKey);
-
-	var serializedTx = tx.serialize();
-
-	 let result = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', console.log);
-	 return result;
+		let result = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex')).on('receipt', console.log);
+		return result;
+	}
+	catch (e) {
+		console.error(e);
+	}
+	return null;
 };
 
 let init = async () => {
