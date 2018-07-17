@@ -13,8 +13,7 @@ var init = async () => {
 		if (!error) {
 			console.log("Game settled: " + event.returnValues);
 		}
-		else
-		{
+		else {
 			console.error(error);
 		}
 	}).on ('data', (event) => {
