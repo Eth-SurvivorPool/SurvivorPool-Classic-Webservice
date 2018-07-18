@@ -36,24 +36,8 @@ exports.infectRandomPlayer = async () => {
 	{
 		console.log("Infecting player: " + result[i].address );
 		var r = await ethContract.infect(result[i]);
-		// console.log(r);
 	}
 };
-
-var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
-	var gameData = await exports.getGameData(false);
-
-	var now = new Date();
-	console.log("Settling Game @ " + now );
-	console.log(gameData);
-
-	var result = await ethContract.settleGame(true, true);
-	console.log(result);
-});
-
-var infectJob = scheduler.scheduleJob('0 * * * *', async () => {
-	exports.infectRandomPlayer();
-});
 
 exports.reconcilePlayers = async () => {
 	var playerCount = await ethContract.getPlayerCount();
@@ -63,13 +47,32 @@ exports.reconcilePlayers = async () => {
 		var r = await ethContract.getPlayerByIdx(i);
 		let result = await gamePersistence.upsertPlayer(
 			{address: r._owner,
-			joinTime: new Date().getTime(),
-			blockIdx: 0,
-			balance: util.toEther(r._balance),
-			blockHash: "0x0"}
+				joinTime: new Date().getTime(),
+				blockIdx: 0,
+				balance: util.toEther(r._balance),
+				blockHash: "0x0"}
 		);
 	}
 };
+
+exports.settlGame = async () => {
+	var gameData = await exports.getGameData(false);
+
+	var now = new Date();
+	console.log("Settling Game @ " + now );
+	console.log(gameData);
+
+	var result = await ethContract.settleGame(true, true);
+	console.log(result);
+};
+
+var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
+	exports.settlGame();
+});
+
+var infectJob = scheduler.scheduleJob('0 * * * *', async () => {
+	exports.infectRandomPlayer();
+});
 
 var reconcilePlayersJob = scheduler.scheduleJob('*/15 * * * *', async () => {
 	exports.reconcilePlayers();
