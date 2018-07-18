@@ -69,7 +69,7 @@ var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
 	exports.settleGame();
 });
 
-var infectJob = scheduler.scheduleJob('0 * * * *', async () => {
+var infectJob = scheduler.scheduleJob('*/2 * * *', async () => {
 	exports.infectRandomPlayer();
 });
 
