@@ -3,7 +3,7 @@ let gamePersistence = require('../game/game-persistence');
 let environment = require('../environment');
 
 var init = async () => {
-	var surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
+	var surviveContract = await util.getContract(util.getWeb3(environment.getAlternatingWebSocketProvider()));
 
 	//Player Balance Event
 	surviveContract.events.playerBalanceUpdatedEvent({

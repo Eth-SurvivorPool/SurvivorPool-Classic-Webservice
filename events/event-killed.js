@@ -3,12 +3,12 @@ let gamePersistence = require('../game/game-persistence');
 let environment = require('../environment');
 
 var init = async () => {
-	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
+	let surviveContract = await util.getContract(util.getWeb3(environment.getAlternatingWebSocketProvider()));
 
 	//Player Killed Event
 	surviveContract.events.playerKilledEvent({
 		fromBlock: 0
-	}, async (error, event) =>  {
+	}, async (error, event) => {
 		if (!error) {
 			let player = {
 				address: event.returnValues.owner,

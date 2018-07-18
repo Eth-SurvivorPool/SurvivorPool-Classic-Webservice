@@ -2,7 +2,7 @@ let util = require('../blockchain/survive-util');
 let environment = require('../environment');
 
 var init = async () => {
-	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
+	let surviveContract = await util.getContract(util.getWeb3(environment.getAlternatingWebSocketProvider()));
 
 	//Player Infected Event
 	surviveContract.events.playerAttemptInfectEvent({

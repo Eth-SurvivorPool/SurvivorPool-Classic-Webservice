@@ -3,7 +3,7 @@ let gamePersistence = require('../game/game-persistence');
 let environment = require('../environment');
 
 var init = async () => {
-	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
+	let surviveContract = await util.getContract(util.getWeb3(environment.getAlternatingWebSocketProvider()));
 
 	// event gameSettledEvent(uint winners, uint prize, uint contractBalance);
 	//Game Reset Event
