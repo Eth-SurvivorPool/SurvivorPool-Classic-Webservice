@@ -8,14 +8,15 @@ var init = async () => {
 	surviveContract.events.playerAwardedEvent({
 		fromBlock: 0
 	}, async (error, event) =>  {
+		console.log("PLAYER AWARDED");
 		if (!error) {
 			var player = {
 				address: event.returnValues.owner,
-				prize: event.returnValues.prize,
+				prize: util.toEther(event.returnValues.prize),
 				winTime: new Date().getTime()
 			};
 			var result = await gamePersistence.insertWinner(player);
-			console.log("Player " + event.returnValues.owner + " awarded: " + event.returnValues.prize);
+			console.log("Player " + event.returnValues.owner + " awarded: " + util.toEther(event.returnValues.prize));
 		}
 		else
 		{

@@ -21,7 +21,7 @@ let updatePlayerQuery = () => {
 };
 
 let insertWinnerQuery = () => {
-	return "INSERT INTO survive.players(address, prize, join_timestamp) VALUES ($1, $2, to_timestamp($3))";
+	return "INSERT INTO survive.winners(address, prize, win_timestamp) VALUES ($1, $2, to_timestamp($3))";
 };
 
 let selectRecentWinners = () => {

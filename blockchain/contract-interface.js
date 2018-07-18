@@ -111,14 +111,12 @@ let init = async () => {
 	exports.settleGame = async (forceKill, reset) => {
 		let gas = await surviveContract.methods.settleGame(forceKill, reset).estimateGas({from: ownerAccount});
 		console.log("settleGame, gas required: " + gas);
-
 		return await sendTransaction(surviveContract.methods.settleGame(forceKill, reset), ownerAccount, ownerKey, gas);
 	};
 
 	exports.infect = async (playerInfo) => {
 		let gas = await surviveContract.methods.infect(playerInfo.address).estimateGas({from: ownerAccount});
 		console.log("infect, gas required: " + gas);
-
 		return await sendTransaction(surviveContract.methods.infect(playerInfo.address), ownerAccount, ownerKey, gas);
 	};
 

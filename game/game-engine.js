@@ -55,7 +55,7 @@ exports.reconcilePlayers = async () => {
 	}
 };
 
-exports.settlGame = async () => {
+exports.settleGame = async () => {
 	var gameData = await exports.getGameData(false);
 
 	var now = new Date();
@@ -63,11 +63,10 @@ exports.settlGame = async () => {
 	console.log(gameData);
 
 	var result = await ethContract.settleGame(true, true);
-	console.log(result);
 };
 
 var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
-	exports.settlGame();
+	exports.settleGame();
 });
 
 var infectJob = scheduler.scheduleJob('0 * * * *', async () => {
