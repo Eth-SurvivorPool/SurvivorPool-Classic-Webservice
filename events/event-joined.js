@@ -20,18 +20,20 @@ var init = async () => {
 			var result = await gamePersistence.insertPlayer(player);
 			console.log("Player " + player.address + " joined" + " at block " + player.blockIdx);
 		}
-		else
-		{
+		else {
 			console.error(error);
 		}
 	}).on('data', (event) => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {
 		// console.log(event);
-	}).on('error', (error) => console.error(error));
+	}).on('error', () => {
+		init().then(() => {
+			console.log("Player-Joined-Event  reconnected");
+		});
+	});
 };
 
-
-init().then((resolve, reject) => {
+init().then(() => {
 	console.log("Player-Joined-Event registered");
 });

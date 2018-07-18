@@ -28,10 +28,14 @@ var init = async () => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {
 		// console.log(event);
-	}).on('error', (error) => console.error(error));
+	}).on('error', () => {
+		init().then(() => {
+			console.log("Player-Infected-Event reconnected");
+		});
+	});
 };
 
 
-init().then((resolve, reject) => {
-	console.log("Player-Cured-Event registered");
+init().then(() => {
+	console.log("Player-Infected-Event registered");
 });

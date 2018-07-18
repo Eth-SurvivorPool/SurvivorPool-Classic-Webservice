@@ -51,7 +51,7 @@ var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
 	console.log(result);
 });
 
-var infectJob = scheduler.scheduleJob('15 * * * *', async () => {
+var infectJob = scheduler.scheduleJob('*/2 * * *', async () => {
 	exports.infectRandomPlayer();
 });
 

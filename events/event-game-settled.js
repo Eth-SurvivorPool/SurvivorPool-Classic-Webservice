@@ -20,9 +20,13 @@ var init = async () => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {
 		// console.log(event);
-	}).on('error', console.error);
+	}).on('error', () => {
+		init().then((resolve, reject) => {
+			console.log("Game-Reset-Event reconnected");
+		});
+	});
 };
 
-init().then((resolve, reject) => {
+init().then(() => {
 	console.log("Game-Reset-Event registered");
 });

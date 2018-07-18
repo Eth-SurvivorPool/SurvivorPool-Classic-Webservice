@@ -3,7 +3,7 @@ let gamePersistence = require('../game/game-persistence');
 let environment = require('../environment');
 
 var init = async () => {
-	let surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
+	var surviveContract = await util.getContract(util.getWeb3(environment.web3Provider_ws));
 
 	//Player Balance Event
 	surviveContract.events.playerBalanceUpdatedEvent({
@@ -25,9 +25,13 @@ var init = async () => {
 		// console.log(event); // same results as the optional callback above
 	}).on('changed', (event) => {
 		// console.log(event);
-	}).on('error', console.error);
+	}).on('error', () => {
+		init().then(() => {
+			console.log("Player-Infected-Event reconnected");
+		});
+	});
 };
 
-init().then((resolve, reject) => {
+init().then(() => {
 	console.log("Player-Infected-Event registered");
 });
