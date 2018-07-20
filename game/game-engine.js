@@ -65,7 +65,7 @@ exports.settleGame = async () => {
 	var result = await ethContract.settleGame(true, true);
 };
 
-var settleGameJob = scheduler.scheduleJob('* * 0 * * *', async () => {
+var settleGameJob = scheduler.scheduleJob('0 0 * * *', async () => {
 	exports.settleGame();
 });
 
