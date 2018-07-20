@@ -25,7 +25,7 @@ let insertWinnerQuery = () => {
 };
 
 let selectRecentWinners = () => {
-	return "SELECT * FROM survive.winners ORDER BY win_timstamp DESC LIMIT 20"
+	return "SELECT * FROM survive.winners ORDER BY win_timestamp DESC LIMIT 20"
 };
 
 let selectRandomPlayers = (count) => {

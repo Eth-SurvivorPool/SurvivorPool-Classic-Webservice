@@ -10,10 +10,11 @@ var init = async () => {
 	}, async (error, event) =>  {
 		console.log("PLAYER AWARDED");
 		if (!error) {
+			var now = new Date();
 			var player = {
 				address: event.returnValues.owner,
 				prize: util.toEther(event.returnValues.prize),
-				winTime: new Date().getTime()
+				winTime: now.getTime()
 			};
 			var result = await gamePersistence.insertWinner(player);
 			console.log("Player " + event.returnValues.owner + " awarded: " + util.toEther(event.returnValues.prize));
